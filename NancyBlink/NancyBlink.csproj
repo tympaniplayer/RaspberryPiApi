@@ -33,16 +33,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Nancy">
-      <HintPath>..\Nancy.dll</HintPath>
+      <HintPath>..\Libs\Nancy.dll</HintPath>
     </Reference>
     <Reference Include="Nancy.Hosting.Self">
-      <HintPath>..\Nancy.Hosting.Self.dll</HintPath>
+      <HintPath>..\Libs\Nancy.Hosting.Self.dll</HintPath>
     </Reference>
     <Reference Include="Raspberry.IO.GeneralPurpose">
-      <HintPath>..\Raspberry.IO.GeneralPurpose.dll</HintPath>
+      <HintPath>..\Libs\Raspberry.IO.GeneralPurpose.dll</HintPath>
     </Reference>
     <Reference Include="Raspberry.System">
-      <HintPath>..\Raspberry.System.dll</HintPath>
+      <HintPath>..\Libs\Raspberry.System.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
