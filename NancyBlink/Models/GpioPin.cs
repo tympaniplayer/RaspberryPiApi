@@ -1,4 +1,5 @@
-﻿using Raspberry.IO.GeneralPurpose;
+﻿using MongoDB.Bson;
+using Raspberry.IO.GeneralPurpose;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,13 @@ namespace NancyBlink.Models
 {
     public class GpioPin
     {
+        public GpioPin() { }
+        public GpioPin(GpioPin other)
+        {
+            Powered = other.Powered;
+            PinNumber = other.PinNumber;
+        }
+        public ObjectId Id { get; set; }
         public bool Powered { get; set; }
         public int PinNumber { get; set; }
     }
