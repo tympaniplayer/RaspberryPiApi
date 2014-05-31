@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NancyBlink.Models
+namespace GpioApi.Models
 {
-    public class GpioPin
+    public class MongoGpioPin : IGpioPin
     {
-        public GpioPin() { }
-        public GpioPin(GpioPin other)
+        public MongoGpioPin() { }
+        public MongoGpioPin(MongoGpioPin other)
         {
             Powered = other.Powered;
             PinNumber = other.PinNumber;
@@ -23,7 +23,7 @@ namespace NancyBlink.Models
 
     public static class PinExtensions
     {
-        public static ConnectorPin ToConnectorPin (this GpioPin pin)
+        public static ConnectorPin ToConnectorPin (this IGpioPin pin)
         {
             switch (pin.PinNumber)
             {
