@@ -90,7 +90,7 @@ namespace GpioApi
             foreach (var each in pins.OrderBy(t => t.PinNumber))
             {
                 connection[each.ToConnectorPin()] = power;
-                each.Powered = false;
+                each.Powered = power;
                 repo.SavePinState(each);
             }
 
