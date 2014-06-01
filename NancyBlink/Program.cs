@@ -25,6 +25,7 @@ namespace GpioApi
         {
             Console.Write("Starting server...");
             var server = new Nancy.Hosting.Self.NancyHost(new Uri("http://localhost:8282"));
+            StaticConfiguration.DisableErrorTraces = false;
             server.Start();
             repo = new MongoRepository();
             Console.WriteLine("started on port 8282!");
