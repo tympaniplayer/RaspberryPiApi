@@ -50,19 +50,11 @@ namespace GpioApi
             };
             Put["GpioPin/Off"] = _ =>
             {
-                var pins = repo.GetPins();
-                List<OutputPinConfiguration> outputPins = new List<OutputPinConfiguration>();
-                pins.ToList().ForEach(t => outputPins.Add(t.ToConnectorPin().Output()));
-                using(var connection = new GpioConnection(outputPins))
-                {
-                    foreach(var each in pins)
-                    {
-                        connection[each.ToConnectorPin()] = false;
-                        each.Powered = false;                        
-                        repo.SavePinState(each);
-                    }
-                }
-                return pins;
+                return PowerAllPins(false);
+            };
+            Put["GpioPin/On"] = _ =>
+            {
+                return PowerAllPins(true);
             };
             Put["/GpioPin"] = _ =>
             {
@@ -78,13 +70,30 @@ namespace GpioApi
 
                 dbPin.Powered = gpioPin.Powered;
                 Console.WriteLine("/GpioPin called for pin{0}", dbPin.PinNumber);
-                using (var connection = new GpioConnection(pin))
-                {
-                    connection[pin] = gpioPin.Powered;
-                    repo.SavePinState(dbPin);
-                }
+                var connection = new GpioConnection(pin);
+                
+                connection[pin] = gpioPin.Powered;
+                repo.SavePinState(dbPin);
+                
                 return dbPin;
             };
+        }
+
+        private static IEnumerable<IGpioPin> PowerAllPins(bool power)
+        {
+            var pins = repo.GetPins();
+            List<OutputPinConfiguration> outputPins = new List<OutputPinConfiguration>();
+            pins.ToList().ForEach(t => outputPins.Add(t.ToConnectorPin().Output()));
+            using (var connection = new GpioConnection(outputPins))
+            {
+                foreach (var each in pins)
+                {
+                    connection[each.ToConnectorPin()] = power;
+                    each.Powered = false;
+                    repo.SavePinState(each);
+                }
+            }
+            return pins;
         }
     }
 }
