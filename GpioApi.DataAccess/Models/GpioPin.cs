@@ -47,6 +47,10 @@ namespace GpioApi.Models
                     return ConnectorPin.P1Pin15;
                 case 16:
                     return ConnectorPin.P1Pin16;
+                case 18:
+                    return ConnectorPin.P1Pin18;
+                case 22:
+                    return ConnectorPin.P1Pin22;
                 default:
                     throw new InvalidOperationException("Pin not implemented");
             }
