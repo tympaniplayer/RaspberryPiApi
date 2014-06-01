@@ -72,10 +72,10 @@ namespace GpioApi
                 dbPin.Powered = gpioPin.Powered;
                 Console.WriteLine("/GpioPin called for pin{0}", dbPin.PinNumber);
                 var connection = new GpioConnection(pin);
-                
+
                 connection[pin] = gpioPin.Powered;
                 repo.SavePinState(dbPin);
-                
+
                 return dbPin;
             };
         }
@@ -85,15 +85,15 @@ namespace GpioApi
             var pins = repo.GetPins();
             List<OutputPinConfiguration> outputPins = new List<OutputPinConfiguration>();
             pins.ToList().ForEach(t => outputPins.Add(t.ToConnectorPin().Output()));
-            using (var connection = new GpioConnection(outputPins))
+            var connection = new GpioConnection(outputPins);
+
+            foreach (var each in pins.OrderBy(t => t.PinNumber))
             {
-                foreach (var each in pins)
-                {
-                    connection[each.ToConnectorPin()] = power;
-                    each.Powered = false;
-                    repo.SavePinState(each);
-                }
+                connection[each.ToConnectorPin()] = power;
+                each.Powered = false;
+                repo.SavePinState(each);
             }
+
             return pins;
         }
     }
